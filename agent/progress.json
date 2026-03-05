@@ -3,9 +3,32 @@
   "status": "active",
   "started_at": "2026-03-04",
   "completed_challenges": [],
-  "observations": [],
-  "weak_spots": [],
-  "strong_spots": [],
+  "observations": [
+    "2026-03-05: Submitted TopN solution. Logic is correct. Two commits: 'commit solution' + 'fixed tests' — suggests tests didn't pass first time, possibly n==0 edge case.",
+    "Slice aliasing bug: returns original slice when n >= len(nums) — not a copy.",
+    "Algorithm approach works but is O(n*k*logk); should know about min-heap (O(n*logk)) for future.",
+    "Test structure is table-driven (good habit), but assertions only check length in TestTopN — not actual values.",
+    "Commented-out dead test committed to repo — minor hygiene issue.",
+    "Missing test cases: n==0 with non-empty input, n==len(nums), negatives, duplicates."
+  ],
+  "weak_spots": [
+    "Slice aliasing / ownership semantics",
+    "Test assertion depth (length vs values)",
+    "Edge case coverage in tests"
+  ],
+  "strong_spots": [
+    "Guard clause pattern (early returns)",
+    "Table-driven test structure",
+    "Clean, readable code"
+  ],
   "next_challenge_modifier": null,
-  "history": []
+  "history": [
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-04",
+      "review_date": "2026-03-05",
+      "review_file": "reviews/2026-03-05_A00-assessment.md",
+      "verdict": "pass — move to A-01"
+    }
+  ]
 }
