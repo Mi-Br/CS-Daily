@@ -46,10 +46,37 @@ func TestCorrectOutput(t *testing.T) {
 	})
 }
 
-// func TestInvalidInput(t *testing.T) {
-// 	inp := []int{}
-// 	got := TopN(inp, 0)
-// 	if len(got) != 0 {
-// 		t.Errorf("TopN(%v, 0) returned slice of  %d , want 0", inp, len(got))
-// 	}
-// }
+func TestAccount(t *testing.T) {
+
+	test_account := Account{
+		balance: 500,
+		account_owner: Customer{
+			name:     "Michail",
+			lastname: "Bredichin",
+			phone:    812384884,
+		},
+		account_number: "ABNA134124566132",
+	}
+
+	tests := []struct {
+		name   string
+		amount float64
+	}{
+		{"valid deposit", 100},
+		{"invalid deposit", -100},
+		{"withdraw", 100},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			err := test_account.Deposit(tc.amount)
+			if err == nil {
+				if test_account.balance != tc.amount {
+					t.Errorf("balance is not correct, want %f but got %f", tc.amount, test_account.balance)
+				}
+			} else {
+				t.Errorf("error is not nil, want %v but got %v", nil, err)
+			}
+		})
+	}
+}
