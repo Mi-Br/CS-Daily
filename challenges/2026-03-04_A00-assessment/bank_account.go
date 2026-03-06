@@ -33,8 +33,9 @@ func (acc *Account) Withdraw(amount float64) error {
 	if (acc.balance - amount) >= 0 {
 		acc.balance -= amount
 		return nil
+
 	}
-	return errors.New("negative deposit")
+	return errors.New("Error: Withrdawing more than balance")
 }
 
 // we modify balance so pointer receiver makes sense
