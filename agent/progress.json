@@ -9,17 +9,28 @@
     "Algorithm approach works but is O(n*k*logk); should know about min-heap (O(n*logk)) for future.",
     "Test structure is table-driven (good habit), but assertions only check length in TestTopN — not actual values.",
     "Commented-out dead test committed to repo — minor hygiene issue.",
-    "Missing test cases: n==0 with non-empty input, n==len(nums), negatives, duplicates."
+    "Missing test cases: n==0 with non-empty input, n==len(nums), negatives, duplicates.",
+    "2026-03-06: Submitted BankAccount (Exercise 2). Logic correct, pointer receiver reasoning articulated well. Key issues: implemented Print() instead of String() — missed fmt.Stringer interface; snake_case field names (account_number); no guard for negative withdrawal amount; error messages uppercase with 'Error:' prefix; shared mutable state across subtests.",
+    "2026-03-07: Submitted interfaces.go (Ex3) and errors.go (Ex4). Ex3: Shape interface correct, all shapes implemented correctly, Heron's formula right. Critical bug: LargestAreaShape returns minimum not maximum (ascending sort, returns index 0). Also mutates input slice — same aliasing pattern as Ex1. Function name mismatch (LargestAreaShape vs LargestArea). No tests. Ex4: Does not compile — ConfigError.Error() returns error not string. Major issues: loop exits after first key (returns inside loop), wrong key casing (Host/Port/Debug vs host/port/debug), no port range validation, no post-parse host-missing check, zero-value ConfigError{} used instead of nil for success, fmt.Errorf without %w wrapping."
   ],
   "weak_spots": [
-    "Slice aliasing / ownership semantics",
+    "Slice aliasing / ownership semantics — recurring pattern (Ex1, Ex3)",
     "Test assertion depth (length vs values)",
-    "Edge case coverage in tests"
+    "Edge case coverage in tests",
+    "Interface satisfaction (fmt.Stringer missed in Ex2; error interface return type wrong in Ex4)",
+    "Go naming conventions (camelCase for fields, function name spec compliance)",
+    "Error message formatting conventions",
+    "Loop control flow — early return inside iteration loop (Ex4)",
+    "Nil vs zero-value for error returns",
+    "fmt.Errorf %w wrapping"
   ],
   "strong_spots": [
     "Guard clause pattern (early returns)",
     "Table-driven test structure",
-    "Clean, readable code"
+    "Clean, readable code",
+    "Pointer vs value receiver reasoning — articulated correctly",
+    "Correct algorithm choices: bufio.Scanner, strings.Cut, strconv.ParseBool, Heron's formula",
+    "Self-documentation via commented alternative implementations (shows thinking)"
   ],
   "next_challenge_modifier": null,
   "history": [
@@ -28,7 +39,21 @@
       "submitted_at": "2026-03-04",
       "review_date": "2026-03-05",
       "review_file": "reviews/2026-03-05_A00-assessment.md",
-      "verdict": "pass — move to A-01"
+      "verdict": "pass ex1 — continue to ex2"
+    },
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-06",
+      "review_date": "2026-03-06",
+      "review_file": "reviews/2026-03-06_A00-assessment-ex2.md",
+      "verdict": "pass ex2 with notes — continue to ex3/4/5"
+    },
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-07",
+      "review_date": "2026-03-07",
+      "review_file": "reviews/2026-03-07_A00-assessment-ex3-ex4.md",
+      "verdict": "ex3 logic mostly right but critical sort bug + mutation; ex4 does not compile — needs fixes before passing"
     }
   ]
 }
