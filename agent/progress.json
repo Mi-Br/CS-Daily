@@ -11,18 +11,20 @@
     "Commented-out dead test committed to repo — minor hygiene issue.",
     "Missing test cases: n==0 with non-empty input, n==len(nums), negatives, duplicates.",
     "2026-03-06: Submitted BankAccount (Exercise 2). Logic correct, pointer receiver reasoning articulated well. Key issues: implemented Print() instead of String() — missed fmt.Stringer interface; snake_case field names (account_number); no guard for negative withdrawal amount; error messages uppercase with 'Error:' prefix; shared mutable state across subtests.",
-    "2026-03-07: Submitted interfaces.go (Ex3) and errors.go (Ex4). Ex3: Shape interface correct, all shapes implemented correctly, Heron's formula right. Critical bug: LargestAreaShape returns minimum not maximum (ascending sort, returns index 0). Also mutates input slice — same aliasing pattern as Ex1. Function name mismatch (LargestAreaShape vs LargestArea). No tests. Ex4: Does not compile — ConfigError.Error() returns error not string. Major issues: loop exits after first key (returns inside loop), wrong key casing (Host/Port/Debug vs host/port/debug), no port range validation, no post-parse host-missing check, zero-value ConfigError{} used instead of nil for success, fmt.Errorf without %w wrapping."
+    "2026-03-07: Submitted interfaces.go (Ex3) and errors.go (Ex4). Ex3: Shape interface correct, all shapes implemented correctly, Heron's formula right. Critical bug: LargestAreaShape returns minimum not maximum (ascending sort, returns index 0). Also mutates input slice — same aliasing pattern as Ex1. Function name mismatch (LargestAreaShape vs LargestArea). No tests. Ex4: Does not compile — ConfigError.Error() returns error not string. Major issues: loop exits after first key (returns inside loop), wrong key casing (Host/Port/Debug vs host/port/debug), no port range validation, no post-parse host-missing check, zero-value ConfigError{} used instead of nil for success, fmt.Errorf without %w wrapping.",
+    "2026-03-08: Submitted Ex3+Ex4 revision (commit 67ddcf6 'fixed some feedback'). Progress: Error() return type fixed, function signature fixed, added interfaces_test.go with good patterns (static interface checks, table-driven tests, edge cases). Remaining issues: errors.go STILL does not compile (return cfg,nil inside loop, no return after loop); wrong key casing still present (Host/Port/Debug vs host/port/debug); string(p_int) wrong conversion; missing port range validation; missing post-parse host check; no %w wrapping. interfaces.go: sort direction now correct; spurious copy(s,s_copy) added (pointless, overwrites original with identical data, shows Clone misunderstanding). Test: negative rectangle test will fail (-1*2=-2<0); typo TestShapeCaluclations; float equality without epsilon."
   ],
   "weak_spots": [
-    "Slice aliasing / ownership semantics — recurring pattern (Ex1, Ex3)",
+    "Slice aliasing / ownership semantics — recurring pattern (Ex1, Ex3, and now spurious copy in Ex3 fix)",
     "Test assertion depth (length vs values)",
     "Edge case coverage in tests",
-    "Interface satisfaction (fmt.Stringer missed in Ex2; error interface return type wrong in Ex4)",
+    "Interface satisfaction (fmt.Stringer missed in Ex2; error interface return type fixed in Ex4 v2)",
     "Go naming conventions (camelCase for fields, function name spec compliance)",
     "Error message formatting conventions",
-    "Loop control flow — early return inside iteration loop (Ex4)",
+    "Loop control flow — early return inside iteration loop (Ex4, persists in v2)",
     "Nil vs zero-value for error returns",
-    "fmt.Errorf %w wrapping"
+    "fmt.Errorf %w wrapping",
+    "Type conversions — string(int64) is rune conversion, not decimal string"
   ],
   "strong_spots": [
     "Guard clause pattern (early returns)",
@@ -30,7 +32,9 @@
     "Clean, readable code",
     "Pointer vs value receiver reasoning — articulated correctly",
     "Correct algorithm choices: bufio.Scanner, strings.Cut, strconv.ParseBool, Heron's formula",
-    "Self-documentation via commented alternative implementations (shows thinking)"
+    "Self-documentation via commented alternative implementations (shows thinking)",
+    "Adopted static interface compliance checks (var _ Shape = ...) — excellent senior pattern",
+    "Adding tests with revision — shows growth in workflow discipline"
   ],
   "next_challenge_modifier": null,
   "history": [
@@ -54,6 +58,13 @@
       "review_date": "2026-03-07",
       "review_file": "reviews/2026-03-07_A00-assessment-ex3-ex4.md",
       "verdict": "ex3 logic mostly right but critical sort bug + mutation; ex4 does not compile — needs fixes before passing"
+    },
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-08",
+      "review_date": "2026-03-08",
+      "review_file": "reviews/2026-03-08_A00-assessment-ex3-ex4-v2.md",
+      "verdict": "good progress — Error() fixed, tests added with strong patterns. errors.go still does not compile (return inside loop + missing end return). interfaces.go sort direction fixed but spurious copy(). One failing test (negative rectangle). Push targeted fixes for ex3+ex4 before passing."
     }
   ]
 }
