@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -19,11 +18,11 @@ type ConfigError struct {
 	err   error
 }
 
-func (cr ConfigError) Error() error {
-	return errors.New(fmt.Sprintf("%s is %s", cr.field, cr.err))
+func (cr ConfigError) Error() string {
+	return fmt.Sprintf("%s is %s", cr.field, cr.err)
 }
 
-func ParseConfig(data string) (Config, ConfigError) {
+func ParseConfig(data string) (Config, error) {
 
 	reader := strings.NewReader(data)
 	scanner := bufio.NewScanner(reader)
@@ -54,8 +53,8 @@ func ParseConfig(data string) (Config, ConfigError) {
 				}
 				cfg.Debug = b
 			}
-			return cfg, ConfigError{}
 		}
+		return cfg, nil
 	}
 }
 

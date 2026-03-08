@@ -7,22 +7,6 @@ import (
 	"slices"
 )
 
-// ---
-
-// ### Exercise 3: Interface + Multiple Types
-// Define a `Shape` interface with `Area() float64` and `Perimeter() float64`.
-
-// Implement it for:
-// - `Circle`
-// - `Rectangle`
-// - `Triangle` (three sides, use Heron's formula for area)
-
-// Write a function `PrintShapeInfo(s Shape)` that prints both values.
-
-// Then write a function `LargestArea(shapes []Shape) Shape` that returns the shape with the largest area.
-
-// ---
-
 type Shape interface {
 	Area() float64
 	Perimeter() float64
@@ -32,26 +16,17 @@ func PrintShapeInfo(s Shape) {
 	fmt.Printf("Shape area is %.2f, and perimeter is %.2f", s.Area(), s.Perimeter())
 }
 
-func LargestAreaShape(slist []Shape) Shape {
-	// if len(slist) == 0 {
-	// 	return nil
-	// }
-	// largest_index := 0
-	// for i, _ := range slist {
-	// 	if i == 0 {
-	// 		continue
-	// 	}
-	// 	if slist[i].Area() > slist[largest_index].Area() {
-	// 		largest_index = i
-	// 	}
-	// }
-	// return slist[largest_index]
+func LargestAreaShape(s []Shape) Shape {
+	if len(s) == 0 || s == nil {
+		return nil
+	}
 
-	//maybe this one is better, more compact
-	slices.SortFunc(slist, func(a, b Shape) int {
-		return cmp.Compare(a.Area(), b.Area())
+	s_copy := slices.Clone(s)
+	copy(s, s_copy)
+	slices.SortFunc(s_copy, func(a, b Shape) int {
+		return cmp.Compare(b.Area(), a.Area())
 	})
-	return slist[0]
+	return s_copy[0]
 }
 
 type Circle struct {
