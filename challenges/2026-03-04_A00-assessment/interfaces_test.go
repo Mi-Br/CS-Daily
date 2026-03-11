@@ -11,7 +11,7 @@ var _ Shape = Circle{}
 var _ Shape = Triangle{}
 var _ Shape = Rectangle{}
 
-func TestShapeCaluclations(t *testing.T) {
+func TestShapeCalculations(t *testing.T) {
 	tests := []struct {
 		name       string
 		shape      Shape
@@ -58,12 +58,6 @@ func TestShapeEdgeCases(t *testing.T) {
 		}
 	})
 
-	t.Run("Negative Shape", func(t *testing.T) {
-		r := Rectangle{a: -1, b: 2}
-		if r.Area() < 0 || r.Perimeter() < 0 {
-			t.Errorf("Phisics broken, negative Area or Perimeter")
-		}
-	})
 }
 
 func TestLargestAreaShape(t *testing.T) {

@@ -22,7 +22,6 @@ func LargestAreaShape(s []Shape) Shape {
 	}
 
 	s_copy := slices.Clone(s)
-	copy(s, s_copy)
 	slices.SortFunc(s_copy, func(a, b Shape) int {
 		return cmp.Compare(b.Area(), a.Area())
 	})

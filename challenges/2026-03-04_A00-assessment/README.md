@@ -113,7 +113,6 @@ Rules:
 - Use a real HTTP GET (doesn't matter if URLs are fake — handle the error gracefully)
 - Return results **in the same order as the input** (this is the tricky part)
 - Don't leak goroutines
-
 ---
 
 ## ✅ Done When
