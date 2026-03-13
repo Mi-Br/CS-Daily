@@ -39,6 +39,7 @@ func FetchAll(urls []string) []Result {
 			r, err := http.Get(u)
 			if err != nil {
 				res[i] = Result{URL: u, Status: 400, Err: err}
+				return
 			}
 			if r != nil {
 				r.Body.Close()
