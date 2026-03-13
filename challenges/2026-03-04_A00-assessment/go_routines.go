@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"sync"
 )
@@ -34,17 +33,17 @@ func FetchAll(urls []string) []Result {
 	res := make([]Result, len(urls))
 	var wg sync.WaitGroup
 	for i, u := range urls {
-		fmt.Println(i)
 		wg.Add(1)
-
 		go func(i int, u string) {
 			defer wg.Done()
 			r, err := http.Get(u)
 			if err != nil {
-				defer r.Body.Close()
-				res[i] = Result{Status: 400, Err: err}
+				res[i] = Result{URL: u, Status: 400, Err: err}
 			}
-			res[i] = Result{Status: r.StatusCode, Err: err}
+			if r != nil {
+				r.Body.Close()
+			}
+			res[i] = Result{URL: u, Status: r.StatusCode, Err: err}
 		}(i, u)
 	}
 	wg.Wait()
