@@ -1,8 +1,20 @@
 {
-  "current_challenge": "A-00",
+  "current_challenge": "A-01",
   "status": "active",
-  "started_at": "2026-03-04",
-  "completed_challenges": [],
+  "started_at": "2026-03-13",
+  "completed_challenges": [
+    {
+      "id": "A-00",
+      "completed_at": "2026-03-13",
+      "exercises": {
+        "ex1_bank_account": "pass",
+        "ex2_interfaces": "pass",
+        "ex3_errors": "pass",
+        "ex4_goroutines": "pass"
+      },
+      "notes": "All 5 exercises passed. Key growth areas flagged: slice aliasing (recurring x3), control flow/early returns, Go error idioms."
+    }
+  ],
   "observations": [
     "2026-03-05: Submitted TopN solution. Logic is correct. Two commits: 'commit solution' + 'fixed tests' — suggests tests didn't pass first time, possibly n==0 edge case.",
     "Slice aliasing bug: returns original slice when n >= len(nums) — not a copy.",
@@ -12,31 +24,39 @@
     "Missing test cases: n==0 with non-empty input, n==len(nums), negatives, duplicates.",
     "2026-03-06: Submitted BankAccount (Exercise 2). Logic correct, pointer receiver reasoning articulated well. Key issues: implemented Print() instead of String() — missed fmt.Stringer interface; snake_case field names (account_number); no guard for negative withdrawal amount; error messages uppercase with 'Error:' prefix; shared mutable state across subtests.",
     "2026-03-07: Submitted interfaces.go (Ex3) and errors.go (Ex4). Ex3: Shape interface correct, all shapes implemented correctly, Heron's formula right. Critical bug: LargestAreaShape returns minimum not maximum (ascending sort, returns index 0). Also mutates input slice — same aliasing pattern as Ex1. Function name mismatch (LargestAreaShape vs LargestArea). No tests. Ex4: Does not compile — ConfigError.Error() returns error not string. Major issues: loop exits after first key (returns inside loop), wrong key casing (Host/Port/Debug vs host/port/debug), no port range validation, no post-parse host-missing check, zero-value ConfigError{} used instead of nil for success, fmt.Errorf without %w wrapping.",
-    "2026-03-08: Submitted Ex3+Ex4 revision (commit 67ddcf6 'fixed some feedback'). Progress: Error() return type fixed, function signature fixed, added interfaces_test.go with good patterns (static interface checks, table-driven tests, edge cases). Remaining issues: errors.go STILL does not compile (return cfg,nil inside loop, no return after loop); wrong key casing still present (Host/Port/Debug vs host/port/debug); string(p_int) wrong conversion; missing port range validation; missing post-parse host check; no %w wrapping. interfaces.go: sort direction now correct; spurious copy(s,s_copy) added (pointless, overwrites original with identical data, shows Clone misunderstanding). Test: negative rectangle test will fail (-1*2=-2<0); typo TestShapeCaluclations; float equality without epsilon."
+    "2026-03-08: Submitted Ex3+Ex4 revision (commit 67ddcf6 'fixed some feedback'). Progress: Error() return type fixed, function signature fixed, added interfaces_test.go with good patterns (static interface checks, table-driven tests, edge cases). Remaining issues: errors.go STILL does not compile (return cfg,nil inside loop, no return after loop); wrong key casing still present (Host/Port/Debug vs host/port/debug); string(p_int) wrong conversion; missing port range validation; missing post-parse host check; no %w wrapping. interfaces.go: sort direction now correct; spurious copy(s,s_copy) added (pointless, overwrites original with identical data, shows Clone misunderstanding). Test: negative rectangle test will fail (-1*2=-2<0); typo TestShapeCaluclations; float equality without epsilon.",
+    "2026-03-13: A-00 fully complete. Ex5 goroutines: good concurrency structure (WaitGroup, indexed goroutines for ordering). Fixes needed over 3 commits: removed debug print, fixed defer r.Body.Close() on nil r, populated URL field, added early return on error. Final bug: fall-through after error block to r.StatusCode (nil panic) — understood and fixed after explanation."
   ],
   "weak_spots": [
-    "Slice aliasing / ownership semantics — recurring pattern (Ex1, Ex3, and now spurious copy in Ex3 fix)",
-    "Test assertion depth (length vs values)",
-    "Edge case coverage in tests",
-    "Interface satisfaction (fmt.Stringer missed in Ex2; error interface return type fixed in Ex4 v2)",
-    "Go naming conventions (camelCase for fields, function name spec compliance)",
-    "Error message formatting conventions",
-    "Loop control flow — early return inside iteration loop (Ex4, persists in v2)",
-    "Nil vs zero-value for error returns",
-    "fmt.Errorf %w wrapping",
-    "Type conversions — string(int64) is rune conversion, not decimal string"
+    "Slice aliasing / ownership semantics — recurring pattern in Ex1, Ex3, goroutines; A-01 Ex3 (Chunk) directly targets this",
+    "Control flow — missing early returns causing fall-through bugs (showed up in Ex4 loop and Ex5 goroutine); needs to internalize 'handle error → return' pattern",
+    "Test assertion depth (length vs values) — tests often check len() but not actual contents",
+    "Edge case coverage in tests — happy path only, missing empty input, boundary values",
+    "Interface satisfaction — fmt.Stringer missed; error.Error() return type confused initially",
+    "Go naming conventions (camelCase fields, function name spec compliance)",
+    "Error formatting — %w wrapping, nil vs zero-value for errors",
+    "Type conversions — string(int) rune gotcha"
   ],
   "strong_spots": [
-    "Guard clause pattern (early returns)",
-    "Table-driven test structure",
-    "Clean, readable code",
-    "Pointer vs value receiver reasoning — articulated correctly",
-    "Correct algorithm choices: bufio.Scanner, strings.Cut, strconv.ParseBool, Heron's formula",
-    "Self-documentation via commented alternative implementations (shows thinking)",
-    "Adopted static interface compliance checks (var _ Shape = ...) — excellent senior pattern",
-    "Adding tests with revision — shows growth in workflow discipline"
+    "Concurrency intuition — indexed goroutines for ordering, WaitGroup usage correct first try",
+    "Pointer vs value receiver reasoning — articulated and applied correctly",
+    "Table-driven test structure — adopted well",
+    "Clean, readable code — easy to follow logic",
+    "Correct algorithm choices — bufio.Scanner, strings.Cut, strconv.ParseBool, Heron's formula",
+    "Static interface compliance checks (var _ Shape = ...) — excellent senior pattern, adopted spontaneously",
+    "Iteration speed — responds to review feedback, pushes fixes same day",
+    "Self-correcting — catches own mistakes when pointed at them"
   ],
-  "next_challenge_modifier": null,
+  "next_challenge_modifier": "A-01 targets: slice aliasing (Chunk exercise), map idioms (TwoSum + WordFreq), early returns. If aliasing still shows up in A-01 → insert B-01 slice internals deep dive before A-02.",
+  "backlog": [
+    {
+      "topic": "Protobuf + gRPC",
+      "track": "C-08",
+      "reason": "Michail saw schema auto-generation at work (frontend-backend type mapping), wants to understand how it works",
+      "readiness": "not yet — finish Go fundamentals first (A-track), target ~A-08 or C-01 onwards",
+      "added": "2026-03-09"
+    }
+  ],
   "history": [
     {
       "challenge": "A-00",
@@ -64,7 +84,26 @@
       "submitted_at": "2026-03-08",
       "review_date": "2026-03-08",
       "review_file": "reviews/2026-03-08_A00-assessment-ex3-ex4-v2.md",
-      "verdict": "good progress — Error() fixed, tests added with strong patterns. errors.go still does not compile (return inside loop + missing end return). interfaces.go sort direction fixed but spurious copy(). One failing test (negative rectangle). Push targeted fixes for ex3+ex4 before passing."
+      "verdict": "good progress — Error() fixed, tests added with strong patterns. errors.go still does not compile. Push targeted fixes."
+    },
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-10",
+      "review_date": "2026-03-10",
+      "review_file": "reviews/2026-03-10_A00-assessment-ex4-final.md",
+      "verdict": "Ex4 conditional pass. Ex3 fixed (negative area, spurious copy removed)."
+    },
+    {
+      "challenge": "A-00",
+      "submitted_at": "2026-03-13",
+      "review_date": "2026-03-13",
+      "verdict": "A-00 COMPLETE. Ex5 goroutines passed after 3 fix commits. Weak spots documented."
+    },
+    {
+      "challenge": "A-01",
+      "assigned_at": "2026-03-13",
+      "challenge_file": "challenges/2026-03-13_A01-maps-and-slices/README.md",
+      "focus": "Maps (TwoSum, WordFreq) + Slice safety (Chunk). Directly targets recurring weak spots."
     }
   ]
 }
