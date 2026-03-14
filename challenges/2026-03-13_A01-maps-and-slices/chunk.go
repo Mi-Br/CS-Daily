@@ -20,7 +20,7 @@ package main
 func Chunk(inp []int, size int) [][]int {
 
 	outp := [][]int{}
-	if size == 0 || size > len(inp) || len(inp) == 0 {
+	if size == 0 || len(inp) == 0 {
 		return outp
 	}
 	for i := 0; i < len(inp); i += size {
