@@ -1,8 +1,19 @@
 {
-  "current_challenge": "A-01",
+  "current_challenge": "W-01",
   "status": "active",
-  "started_at": "2026-03-13",
+  "started_at": "2026-03-15",
+  "pacing_note": "No new challenges until W-01 is solved. Michail requested pacing on 2026-03-17.",
   "completed_challenges": [
+    {
+      "id": "A-01",
+      "completed_at": "2026-03-15",
+      "exercises": {
+        "two_sum": "pass",
+        "word_freq": "pass",
+        "chunk": "pass"
+      },
+      "notes": "All 3 exercises passed. Post-review fixes applied. Slice aliasing (Chunk) handled correctly."
+    },
     {
       "id": "A-00",
       "completed_at": "2026-03-13",
