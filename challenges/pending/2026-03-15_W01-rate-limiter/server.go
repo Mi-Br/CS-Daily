@@ -10,7 +10,14 @@ import (
 // Rejected requests should respond with HTTP 429 and a plain text message.
 func RateLimitMiddleware(limiter *RateLimiter, next http.Handler) http.Handler {
 	// TODO: implement
-	return next
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		clientID := r.RemoteAddr
+		if limiter.Allow(clientID) {
+			next.ServeHTTP(w, r)
+		} else {
+			http.Error(w, "Limit Exceeded", http.StatusTooManyRequests)
+		}
+	})
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
