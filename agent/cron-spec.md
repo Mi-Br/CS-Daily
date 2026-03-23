@@ -30,49 +30,90 @@ For each changed `.go` file:
   - Flag weak spots if a concept appears shaky
   - If challenge is complete + review passed → mark completed
 
-### Step 4: Generate next challenge (when ready)
+### Step 4: Generate reading (Monday, ahead of the week)
+Triggered on Monday morning, or when a new concept is coming up.
+
+Generation process:
+1. Read `agent/curriculum.md` → find the concept for the current/next week
+2. Search web for 2-4 real articles/blog posts on that concept
+3. Write reading file to `reading/YYYY-MM-DD_topic.md` (see format below)
+4. Update `reading/README.md` index
+5. Push to repo
+6. Send short note to CS Daily group: "Reading for this week is up → reading/YYYY-MM-DD_topic.md"
+
+### Step 5: Generate warmup (Thu/Fri, after reading)
+Triggered on Thu or Fri morning, only after the week's reading file exists.
+
+Generation process:
+1. Check that `reading/YYYY-MM-DD_topic.md` for this concept exists
+2. Write warmup to `warmups/YYYY-MM-DD_topic/README.md` + `warmup.go` + `warmup_test.go` + `go.mod`
+3. Update `warmups/README.md` index
+4. Push to repo
+5. Send short note to CS Daily group: "Warmup is up → warmups/YYYY-MM-DD_topic/"
+
+### Step 6: Generate next weekend challenge (when ready)
 Triggered when:
 - Current challenge is marked complete in progress.json, OR
-- Michail says "ready for next" in Telegram
+- Michail says "ready for next"
 
 Generation process:
 1. Read `agent/curriculum.md` → find next uncompleted challenge
 2. Check `progress.json` → check for weak spots that need reinforcement
-3. Search web for 1-2 real articles/blog posts on the concept
-4. Write challenge to `challenges/YYYY-MM-DD_<title>/README.md`
-5. Push to repo
-6. Send challenge to Telegram (Hustle group)
+3. Write challenge to `challenges/pending/YYYY-MM-DD_<title>/README.md`
+4. Push to repo
+5. Send short note to CS Daily group: "Weekend challenge is up → challenges/pending/..."
 
-## Challenge file format
+## File formats
 
+### Reading file: `reading/YYYY-MM-DD_topic.md`
+```markdown
+# [Topic Name]
+**Date:** YYYY-MM-DD | **Concept:** ... | **Est. read time:** ~X min
+
+## Why this matters
+[1-2 sentences — why this concept is relevant to what Michail is building]
+
+## Read these (in order)
+1. **[Title](URL)** — why: one sentence
+2. **[Title](URL)** — why: one sentence
+
+## Key concepts to come away with
+[Bullet points of the core ideas, with short code snippets if helpful]
+
+## Questions to answer after reading
+[3-5 questions Michail should be able to answer before doing the warmup]
+
+## Your Notes
+> (Michail adds notes here as he reads)
+```
+
+### Warmup folder: `warmups/YYYY-MM-DD_topic/`
+```
+README.md       ← exercise description (prereading link, task, done-when checklist)
+warmup.go       ← stub with types + empty function signature
+warmup_test.go  ← comment-only scaffold ("write two tests: ...")
+go.mod
+```
+
+### Challenge folder: `challenges/pending/YYYY-MM-DD_title/`
 ```markdown
 # Challenge: [Title]
 **Track:** A/B/C  **ID:** A-XX  **Date:** YYYY-MM-DD
 
-## 📖 Read First
-- [Article title](URL) — why: one sentence on what you'll get from it
-- [Article title](URL) — why: ...
+## The Challenge
+[Clear problem statement — no scaffolded solution]
 
-## 🎯 The Challenge
-[Clear problem statement]
-
-## ✅ Done When
+## Done When
 - [ ] Criterion 1
-- [ ] Criterion 2
 - [ ] Tests written and passing
-- [ ] `go vet` passes with no warnings
+- [ ] `go test -race ./...` passes
+- [ ] `go vet ./...` clean
 
-## 💡 Hints (read only if stuck)
-<details>
-<summary>Hint 1</summary>
-...
-</details>
-
-## 📁 Where to put your code
-`challenges/YYYY-MM-DD_<title>/`
+## Hints (read only if stuck)
+<details><summary>Hint 1</summary>...</details>
 ```
 
-## Telegram messages
-- Reviews: sent to "Hustle Michail & July" group (-5271500205)
-- Nudges: same group
-- New challenges: same group
+## Messaging
+- All messages go to **CS Daily Michail & July** group (chat ID: -5145388620)
+- Never send to Hustle group for CS Daily content
+- Keep messages short: "Reading for this week is up → reading/2026-03-23_mutexes.md"
