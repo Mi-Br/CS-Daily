@@ -21,7 +21,7 @@
 
 | ID | Title | Assigned | Deadline | Folder |
 |----|-------|----------|----------|--------|
-| — | — (following W12 plan) | — | — | — |
+| W12 | `todo` CLI — Struct Design weekend project | 2026-03-22 | 2026-03-28 | `pending/2026-W12_todo-cli/` |
 
 ---
 
