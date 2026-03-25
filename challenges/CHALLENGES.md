@@ -21,6 +21,8 @@
 
 | ID | Title | Assigned | Deadline | Folder |
 |----|-------|----------|----------|--------|
+| W12-warmup-1 | Warmup — Concurrency Stress Test for RateLimiter | 2026-03-25 | — | `pending/2026-W12_warmup-concurrency-stress/` |
+| W12-warmup-2 | Warmup — Refactor Rate Limiter Cleanup | 2026-03-25 | — | `pending/2026-W12_warmup-refactor/` |
 | W12-daily | Library System — Struct Design from Scratch | 2026-03-25 | 2026-03-27 | `pending/2026-W12_thu-struct-design/` |
 | W12-weekend | `todo` CLI — Struct Design weekend project | 2026-03-22 | 2026-03-28 | `pending/2026-W12_todo-cli/` |
 

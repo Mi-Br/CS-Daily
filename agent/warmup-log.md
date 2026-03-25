@@ -18,3 +18,4 @@ Track sent warmups so the cron agent doesn't repeat them.
 2026-03-22 | CountRequests read-only method | Implement CountRequests(ip) using RLock, counting only in-window timestamps
 2026-03-23 | Stats() snapshot method | Implement Stats() returning IP→count map using RLock, no mutation, empty map if no in-window requests
 2026-03-24 | struct-based refactor | Refactor package-level vars into a RateLimiter struct with constructor and method receivers
+2026-03-25 | concurrency stress test | Write -race-safe test hammering Allow() from 100 goroutines with atomic counters and meaningful assertions
