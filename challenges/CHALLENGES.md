@@ -21,7 +21,7 @@
 
 | ID | Title | Assigned | Deadline | Folder |
 |----|-------|----------|----------|--------|
-| A-02 | Strings & Bytes | 2026-03-25 | — | `pending/2026-03-25_A02-strings-and-bytes/` |
+| — | — (following W12 plan) | — | — | — |
 
 ---
 
