@@ -21,7 +21,8 @@
 
 | ID | Title | Assigned | Deadline | Folder |
 |----|-------|----------|----------|--------|
-| W12 | `todo` CLI — Struct Design weekend project | 2026-03-22 | 2026-03-28 | `pending/2026-W12_todo-cli/` |
+| W12-daily | Library System — Struct Design from Scratch | 2026-03-25 | 2026-03-27 | `pending/2026-W12_thu-struct-design/` |
+| W12-weekend | `todo` CLI — Struct Design weekend project | 2026-03-22 | 2026-03-28 | `pending/2026-W12_todo-cli/` |
 
 ---
 
