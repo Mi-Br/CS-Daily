@@ -13,6 +13,7 @@
 |----|-------|----------|-----------|--------|
 | A-00 | The Assessment — Slices, Structs, Interfaces, Errors, Goroutines | 2026-03-04 | 2026-03-13 | `solved/2026-03-04_A00-assessment/` |
 | A-01 | Maps & Slices — Two Sum, Word Frequency, Chunk | 2026-03-13 | 2026-03-15 | `solved/2026-03-13_A01-maps-and-slices/` |
+| W-01 | Rate Limiter — Maps, Mutexes, HTTP Middleware | 2026-03-15 | 2026-03-21 | `solved/2026-03-15_W01-rate-limiter/` |
 
 ---
 
@@ -20,17 +21,14 @@
 
 | ID | Title | Assigned | Deadline | Folder |
 |----|-------|----------|----------|--------|
-| W-01 | Rate Limiter — Maps, Mutexes, HTTP Middleware | 2026-03-15 | — | `pending/2026-03-15_W01-rate-limiter/` |
+| A-02 | Strings & Bytes | 2026-03-25 | — | `pending/2026-03-25_A02-strings-and-bytes/` |
 
 ---
 
 ## Queue (not yet assigned)
 
-Next challenges are on hold until W-01 is solved.
-
 | ID | Title | Track | Notes |
 |----|-------|-------|-------|
-| A-02 | TBD — Strings & Bytes | A | Planned next |
 | C-01 | TBD — HTTP Client / REST patterns | C | After A-02 |
 
 ---
