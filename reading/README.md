@@ -10,3 +10,4 @@ Add your own notes to each file as you read — questions, things that clicked, 
 | Date | Topic | Status |
 |------|-------|--------|
 | 2026-03-23 | Mutexes & RWMutex | 📖 read this |
+| 2026-04-02 | Struct Design (value vs pointer semantics, type decomposition) | 📖 read this |
