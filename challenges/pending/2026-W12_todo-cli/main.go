@@ -51,12 +51,8 @@ func (b *Backlog) Add(t Task) {
 }
 
 func (b Backlog) List() {
-	if len(b) == 0 {
-		fmt.Println("All tasks compeleted !!!  ✅, nothing to show")
-	} else {
-		for i, t := range b {
-			fmt.Printf("%d - %s \t Priority: %s \t Status: %s", i, t.Description, t.Priority, t.Status)
-		}
+	for i, t := range b {
+		fmt.Printf("%d - %s \t Priority: %s \t Status: %s", i, t.Description, t.Priority, t.Status)
 	}
 }
 func (b *Backlog) ChangeTaskStatus(taskId int, status Status) error {
@@ -76,11 +72,17 @@ func (b *Backlog) Delete(taskID int) error {
 }
 func main() {
 	fmt.Println("Todo app is running")
-
+	var store Store
 	var backlog Backlog
+	err := store.Load(&backlog)
+	if err != nil {
+		fmt.Println("Error loading backlog", err)
+		return
+	}
 
 	if len(os.Args) > 1 {
 		cmd := os.Args[1]
+		fmt.Println("Command", cmd)
 		switch cmd {
 		case "list":
 			backlog.List()
@@ -107,8 +109,10 @@ func main() {
 						}
 						t.Priority = Priority(val)
 					}
-					backlog.Add(t)
 				}
+				backlog.Add(t)
+				fmt.Println("Backlog", backlog)
+				store.Save(&backlog)
 			}
 		case "done":
 			if len(os.Args) < 2 {
@@ -123,6 +127,7 @@ func main() {
 			}
 			backlog.ChangeTaskStatus(taskId, Done)
 			fmt.Printf("Task %d marked Done", taskId)
+			store.Save(&backlog)
 		case "delete":
 			if len(os.Args) < 2 {
 				fmt.Print(fmt.Errorf("must provide valid task id"))
@@ -134,15 +139,15 @@ func main() {
 			if err != nil {
 				fmt.Print(fmt.Errorf("must provide valid task id"))
 			}
-			err := backlog.Delete(taskId)
+			err = backlog.Delete(taskId)
 			if err != nil {
 				fmt.Print(err)
 				return
 			}
 			fmt.Printf("Task: %d successfully removed", taskId)
+			store.Save(&backlog)
 		}
 	} else {
 		fmt.Println("No arguments provided")
 	}
-
 }
